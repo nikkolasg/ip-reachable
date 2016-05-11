@@ -19,7 +19,7 @@ type HostCheckNet struct {
 }
 
 const HOST_CHECK_NET = "https://check-host.net/"
-const WHATS_MY_IP = "http://whatsmyip.org/"
+const WHATS_MY_IP = "http://www.whatsmyip.org/"
 
 var ErrUnreachable = errors.New("Unreachable IP:PORT by the service")
 var ErrUnknownResponse = errors.New("Unable to make sense of the response from the service")
