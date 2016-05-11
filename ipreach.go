@@ -55,7 +55,9 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 	}
 
 	fmt.Println("Response:", buffer)
-	fmt.Println("req.URL:", req.URL)
+	requestBuff := &bytes.Buffer{}
+	err := req.Write(requestBuff)
+	fmt.Println(requestBuff, err)
 	if !bytes.Contains(buffer, []byte("1")) {
 		return ErrUnreachable
 	}
