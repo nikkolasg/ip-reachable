@@ -22,8 +22,8 @@ func TestWhatsMyIP() {
 	if err := checker.CheckTCP("127.0.0.1:3100"); err == nil {
 		fmt.Println("Should not work if port not open")
 	}
-	if err := checker.CheckTCP("127.0.0.1:3000"); err == nil {
-		fmt.Println("Should not work if port not open")
+	if err := checker.CheckTCP("127.0.0.1:3000"); err != nil {
+		fmt.Println("Should not work if port not open", err)
 	}
 }
 
