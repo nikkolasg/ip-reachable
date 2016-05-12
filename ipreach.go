@@ -52,7 +52,6 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 
 	client := &http.Client{}
-	fmt.Println("Created request for ", ip)
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
@@ -63,10 +62,6 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 		return err
 	}
 
-	requestBuff := &bytes.Buffer{}
-	err = req.Write(requestBuff)
-	fmt.Println(requestBuff, err)
-	fmt.Println("Response:", string(buffer))
 	if !bytes.Contains(buffer, []byte("1")) {
 		return ErrUnreachable
 	}
