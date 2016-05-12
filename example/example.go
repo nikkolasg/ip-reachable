@@ -21,12 +21,14 @@ func TestWhatsMyIP() {
 	checker := ipreach.WhatsMyIp{}
 	if err := checker.CheckTCP("127.0.0.1:3100"); err == nil {
 		fmt.Println("[-] Should not work if port not open")
+	} else {
+		fmt.Println("[+] 3100 port not open correctly detected!")
 	}
-	fmt.Println("[+] 3100 port not open correctly detected!")
 	if err := checker.CheckTCP("127.0.0.1:3000"); err != nil {
 		fmt.Println("Should not work if port not open", err)
+	} else {
+		fmt.Println("[+] 3000 port OPEN correctly detected!")
 	}
-	fmt.Println("[+] 3000 port OPEN correctly detected!")
 }
 
 func main() {
