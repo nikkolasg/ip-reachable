@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -32,15 +33,24 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 	if err != nil {
 		return err
 	}
-	data := bytes.NewBufferString("port=" + port + "&timeout=default")
+	values := url.Values{}
+	values.Set("port", port)
+	values.Set("timeout", "default")
+
 	// ask the check
 	url := WHATS_MY_IP + "port-scanner/scan.php"
-	req, err := http.NewRequest("POST", url, data)
+	req, err := http.NewRequest("POST", url, bytes.NewBufferString(values.Encode()))
 	if err != nil {
 		return err
 	}
 	req.Header.Set("Host", "www.whatsmyip.org")
 	req.Header.Set("Referer", "http://www.whatsmyip.org/port-scanner/")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0")
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept-Language", "en-US,en;q=0.5")
+	req.Header.Set("Accept-Encoding", "gzip, deflate")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 
 	client := &http.Client{}
 	fmt.Println("Created request for ", ip)
@@ -54,10 +64,10 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 		return err
 	}
 
-	fmt.Println("Response:", buffer)
 	requestBuff := &bytes.Buffer{}
 	err = req.Write(requestBuff)
 	fmt.Println(requestBuff, err)
+	fmt.Println("Response:", string(buffer))
 	if !bytes.Contains(buffer, []byte("1")) {
 		return ErrUnreachable
 	}
