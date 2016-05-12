@@ -48,7 +48,6 @@ func (w *WhatsMyIp) CheckTCP(ip string) error {
 	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0")
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "en-US,en;q=0.5")
-	req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 
